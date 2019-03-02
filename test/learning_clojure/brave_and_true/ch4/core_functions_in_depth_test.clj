@@ -32,3 +32,16 @@
   (testing "adds a new value to the beginning of a map"
     ; The cons will convert {:bar "bar"} into a seq (use assoc to add new elements to a map)
     (is (= [{:foo "foo"} [:bar "bar"]] (cons {:foo  "foo"} {:bar "bar"})))))
+
+(deftest fn-map
+  (testing "passing multiple collections"
+    (is (= ["aA" "bB"] (map str ["a" "b"] ["A" "B"])))
+    (is (= ["aA" "bB"] (list (str "a" "A") (str "b" "B"))))))
+
+                                        ; Vampire diet
+(deftest fn-unify-diet-data
+  (testing "maps human and critter"
+    (is (= {:human 1.5 :critter 0.1} (unify-diet-data 1.5 0.1))))
+  (testing "maps multiple human consumption and critter"
+    (is [{:human 1.5 :critter 0.1}
+         {:human 3.0 :critter 0.2}] (map unify-diet-data [1.5 3.0] [0.1 0.2]))))
