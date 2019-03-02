@@ -36,9 +36,15 @@
 (deftest fn-map
   (testing "passing multiple collections"
     (is (= ["aA" "bB"] (map str ["a" "b"] ["A" "B"])))
-    (is (= ["aA" "bB"] (list (str "a" "A") (str "b" "B"))))))
+    (is (= ["aA" "bB"] (list (str "a" "A") (str "b" "B")))))
+  (testing "passing a collection of functions (sum and count)"
+    (is (= [15 2] (map #(% [5 10]) [#(reduce + %) #(count %)]))))
+  (testing "returns a vector of the value associeted with a keyword from a collection"
+    (is (= ["Bruce Wayne" "Peter Parker"] (map :real [{:alias "Batman" :real "Bruce Wayne"}
+                                                      {:alias "Spider-Man" :real "Peter Parker"}])))))
 
-                                        ; Vampire diet
+
+; Vampire diet
 (deftest fn-unify-diet-data
   (testing "maps human and critter"
     (is (= {:human 1.5 :critter 0.1} (unify-diet-data 1.5 0.1))))

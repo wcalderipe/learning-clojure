@@ -31,7 +31,6 @@
 ; and another representing critter intake for the past four days. The unify-diet-data function
 ; takes a single day’s data for both human and critter feeding and unifies the two into a single map
 (def human-consumption [8.1 7.3 6.6])
-
 (def critter-consumption [0.0 0.2 0.3])
 
 (defn unify-diet-data
