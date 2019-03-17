@@ -42,7 +42,29 @@
   (testing "returns a vector of the value associeted with a keyword from a collection"
     (is (= ["Bruce Wayne" "Peter Parker"] (map :real [{:alias "Batman" :real "Bruce Wayne"}
                                                       {:alias "Spider-Man" :real "Peter Parker"}])))))
+(deftest fn-reduce
+  (testing "transforms a map's values, producing a new map with the same keys but update values"
+    (is (= {:max 31 :min 11} (reduce (fn [new-map [key value]]
+                                       (assoc new-map key (inc value)))
+                                     {}
+                                     {:max 30 :min 10}))))
+  (testing "filters out keys based on their values"
+    (is (= {:human 4.5} (reduce (fn [new-map [key value]]
+                                  (if (> value 4)
+                                    (assoc new-map key value)
+                                    new-map))
+                                {}
+                                {:human 4.5 :critter 3.5})))))
 
+(deftest fn-take-and-take-while
+  (testing "returns the first n elements"
+    (is (= [1 2] (take 2 [1 2 3]))))
+  (testing "returns"
+    (is (= [{:max 2 :min 1}
+            {:max 3 :min 2}] (take-while #(> (:min %) 3) [{:max 2 :min 1}
+                                                          {:max 3 :min 2}
+                                                          {:max 10 :min 5}
+                                                          {:max 15 :min 10}])))))
 
 ; Vampire diet
 (deftest fn-unify-diet-data
